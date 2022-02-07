@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Lab Activity 7</title>
+</head>
+<body>
+    <h1>Add a plane</h1>
+    <label for="name">Plane Name</label><br>
+    <input type="text"  id="name">
+    <button onclick="addPlane()">Add</button>
+    <button onclick="planeStatus()">Check Status</button>
+    <button onclick="planeTakeOff()">Take off</button>
+    <button onclick="planeLand()">Land</button><br>
+    <label id="out"></label>
+
+</body>
+<script>
+    function Airplane(name) {
+        this.name = name;
+        this.isFlying = true;
+    }
+    Airplane.prototype.takeOff = function () {
+        return this.isFlying = true
+    };
+    Airplane.prototype.land = function () {
+        return this.isFlying = false;
+    };
+    
+    function addPlane(){
+        var x = document.getElementById("name")
+        let obj = new Airplane(x)
+
+        window.localStorage.setItem(x, JSON.stringify(obj))
+    }
+
+    function planeStatus(){
+        var x = document.getElementById("name")
+        var y = document.getElementById("out")
+        
+        var obj = JSON.parse(window.localStorage.getItem(x))
+
+        if(x.value === "")
+            y.innerHTML = "name required"
+
+        else if(obj.isFlying === true)
+            y.innerHTML = "The plane is on air"
+        else
+            y.innerHTML = "The plane is in land"
+    }
+
+    function planeTakeOff(){
+        var x = document.getElementById("name")
+        var y = document.getElementById("out")
+        
+        var obj = JSON.parse(window.localStorage.getItem(x))
+
+        if(x.value === '')
+            y.innerHTML = "name required"
+
+        else if(obj.isFlying === true)
+            y.innerHTML = "The plane is already on air"
+        else
+           {
+            y.innerHTML = "The plane is set to take off"
+            obj.isFlying = true;
+           }
+           
+        window.localStorage.setItem(x, JSON.stringify(obj))
+    }
+
+    function planeLand(){
+        var x = document.getElementById("name")
+        var y = document.getElementById("out")
+        
+        var obj = JSON.parse(window.localStorage.getItem(x))
+
+        if(x.value = "")
+            y.innerHTML = "name required"
+        else if(obj.land)
+         y.innerHTML = "The plane is already in land"
+        else
+        {
+            obj.isFlying = false;
+            y.innerHTML =  "The plane is orderd to land"
+        }
+    }
+</script>
+</html>
